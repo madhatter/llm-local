@@ -1,0 +1,16 @@
+models:
+  - name: qwen35-9b-q4km
+    repo: unsloth/Qwen3.5-9B-GGUF
+    include: "*Q4_K_M*"
+    local_dir: ~/models/qwen35
+    default: true
+    serve:
+      host: 0.0.0.0
+      port: 8080
+      n_gpu_layers: 99
+      ctx_size: 8192
+      threads: 8
+      repeat_penalty: 1.05
+      temp: 0.8
+      top_p: 0.95
+
