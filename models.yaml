@@ -1,5 +1,5 @@
 models:
-  - name: qwen35-9b-q4km
+  - name: qwen35-9b
     repo: unsloth/Qwen3.5-9B-GGUF
     include: "*Q4_K_M*"
     local_dir: ~/models/qwen35
@@ -8,9 +8,37 @@ models:
       host: 0.0.0.0
       port: 8080
       n_gpu_layers: 99
-      ctx_size: 8192
+      ctx_size: 32768
       threads: 8
-      repeat_penalty: 1.05
       temp: 0.8
       top_p: 0.95
+      repeat_penalty: 1.05
 
+  - name: qwen3-coder-30b
+    repo: unsloth/Qwen3-Coder-30B-A3B-Instruct-GGUF
+    include: "*UD-Q4_K_XL*"
+    local_dir: ~/models/qwen3-coder
+    serve:
+      host: 0.0.0.0
+      port: 8081
+      n_gpu_layers: 99
+      ctx_size: 65536
+      threads: 8
+      temp: 0.7
+      top_p: 0.8
+      top_k: 20
+      repeat_penalty: 1.05
+
+  - name: gemma4-26b
+    repo: unsloth/gemma-4-26B-A4B-it-GGUF
+    include: "*UD-Q4_K_XL*"
+    local_dir: ~/models/gemma4
+    serve:
+      host: 0.0.0.0
+      port: 8082
+      n_gpu_layers: 99
+      ctx_size: 32768
+      threads: 8
+      temp: 0.7
+      top_p: 0.95
+      repeat_penalty: 1.05
