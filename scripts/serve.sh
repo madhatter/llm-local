@@ -5,15 +5,15 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 YAML="$SCRIPT_DIR/../models.yaml"
 
 if [[ $# -eq 0 ]]; then
-    name=$(yq '.models[] | select(.default == true) | .name' "$YAML")
+    name=$(yq -r '.models[] | select(.default == true) | .name' "$YAML")
     echo "No model specified, using default: $name"
 else
     name="$1"
 fi
 
-get() { yq ".models[] | select(.name == \"$name\") | .serve.$1" "$YAML"; }
+get() { yq -r ".models[] | select(.name == \"$name\") | .serve.$1" "$YAML"; }
 
-local_dir=$(yq ".models[] | select(.name == \"$name\") | .local_dir" "$YAML")
+local_dir=$(yq -r ".models[] | select(.name == \"$name\") | .local_dir" "$YAML")
 local_dir="${local_dir/#\~/$HOME}"
 model_file=$(find "$local_dir" -name "*.gguf" | head -1)
 
