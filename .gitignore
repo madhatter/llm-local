@@ -1,8 +1,2 @@
-# Models
-models/*.gguf
-models/*.bin
-models/*.safetensors
-models/*.ggml
-
 # OS
 .DS_Store
