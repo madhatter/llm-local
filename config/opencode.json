@@ -1,0 +1,54 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "llama-qwen35-9b": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Local llama.cpp",
+      "options": {
+        "baseURL": "http://192.168.0.100:8080/v1",
+        "apiKey": "not-needed"
+      },
+      "models": {
+        "qwen35-9b-q4": {
+          "name": "Qwen 3.5 9B Q4_K_M",
+          "tools": true,
+          "context_length": 32768,
+          "max_tokens": 8192
+        }
+      }
+    },
+    "llama-qwen3-coder-30b": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Local llama.cpp",
+      "options": {
+        "baseURL": "http://192.168.0.100:8081/v1",
+        "apiKey": "not-needed"
+      },
+      "models": {
+        "qwen3-coder-30b-q4": {
+          "name": "Qwen3 Coder 30B Q4",
+          "tools": true,
+          "context_length": 65536,
+          "max_tokens": 8192
+        }
+      }
+    },
+    "llama-gemma4-26b": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Local llama.cpp",
+      "options": {
+        "baseURL": "http://192.168.0.100:8082/v1",
+        "apiKey": "not-needed"
+      },
+      "models": {
+        "gemma4-26b-q4": {
+          "name": "Gemma 4 26B Q4",
+          "tools": true,
+          "context_length": 32768,
+          "max_tokens": 8192
+        }
+      }
+    }
+  },
+  "model": "llama-qwen35-9b/qwen35-9b-q4"
+}
