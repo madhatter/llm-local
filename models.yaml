@@ -91,3 +91,23 @@ models:
       cache_type_k: q8_0
       cache_type_v: q8_0
       flash_attn: true
+
+  - name: qwen36-27b
+    repo: bartowski/Qwen_Qwen3.6-27B-GGUF
+    include: "*Q3_K_M*"
+    local_dir: ~/models/qwen36
+    serve:
+      host: 0.0.0.0
+      port: 8086
+      n_gpu_layers: 99
+      ctx_size: 16384
+      threads: 8
+      temp: 0.7
+      top_p: 0.95
+      top_k: 20
+      repeat_penalty: 1.05
+      cache_type_k: q4_0
+      cache_type_v: q4_0
+      flash_attn: true
+      jinja: true
+
