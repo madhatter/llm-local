@@ -1,6 +1,5 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "mouse": false,
   "provider": {
     "llama-qwen35-9b": {
       "npm": "@ai-sdk/openai-compatible",
