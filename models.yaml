@@ -47,7 +47,7 @@ models:
       flash_attn: true
 
   - name: gemma3-8b
-    repo: google/gemma-3-8b-it
+    repo: bartowski/gemma-3-8b-it-GGUF
     include: "*Q4_K_M*"
     local_dir: ~/models/gemma3-8b
     serve:
@@ -61,7 +61,7 @@ models:
       repeat_penalty: 1.05
 
   - name: qwen25-7b
-    repo: Qwen/Qwen2.5-7B-Instruct-GGUF
+    repo: bartowski/Qwen2.5-7B-Instruct-GGUF
     include: "*Q4_K_M*"
     local_dir: ~/models/qwen25-7b
     serve:
@@ -75,7 +75,7 @@ models:
       repeat_penalty: 1.05
 
   - name: phi35-mini
-    repo: microsoft/Phi-3.5-mini-instruct-GGUF
+    repo: bartowski/Phi-3.5-mini-instruct-GGUF
     include: "*Q4_K_M*"
     local_dir: ~/models/phi35-mini
     serve:
