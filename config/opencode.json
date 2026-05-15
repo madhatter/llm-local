@@ -48,6 +48,70 @@
           "max_tokens": 8192
         }
       }
+    },
+    "llama-gemma3-12b": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Local llama.cpp",
+      "options": {
+        "baseURL": "http://192.168.0.100:8083/v1",
+        "apiKey": "not-needed"
+      },
+      "models": {
+        "gemma3-12b-q4": {
+          "name": "Gemma 3 12B Q4_K_M",
+          "tools": true,
+          "context_length": 27000,
+          "max_tokens": 16384
+        }
+      }
+    },
+    "llama-qwen25-7b": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Local llama.cpp",
+      "options": {
+        "baseURL": "http://192.168.0.100:8084/v1",
+        "apiKey": "not-needed"
+      },
+      "models": {
+        "qwen25-7b-q4": {
+          "name": "Qwen 2.5 7B Q4_K_M",
+          "tools": true,
+          "context_length": 131072,
+          "max_tokens": 8192
+        }
+      }
+    },
+    "llama-phi35-mini": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Local llama.cpp",
+      "options": {
+        "baseURL": "http://192.168.0.100:8085/v1",
+        "apiKey": "not-needed"
+      },
+      "models": {
+        "phi35-mini-q4": {
+          "name": "Phi-3.5 Mini Q4_K_M",
+          "tools": true,
+          "context_length": 128000,
+          "max_tokens": 8192
+        }
+      }
+    },
+    "llama-qwen36-27b": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Local llama.cpp",
+      "options": {
+        "baseURL": "http://192.168.0.100:8086/v1",
+        "apiKey": "not-needed"
+      },
+      "models": {
+        "qwen36-27b-q3": {
+          "name": "Qwen 3.6 27B Q3_K_M",
+          "tools": true,
+          "context_length": 16384,
+          "max_tokens": 8192
+        }
+      }
     }
   },
   "model": "llama-qwen35-9b/qwen35-9b-q4"
