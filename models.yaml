@@ -36,7 +36,7 @@ models:
     serve:
       host: 0.0.0.0
       port: 8082
-      n_gpu_layers: 20
+      n_gpu_layers: 25
       ctx_size: 65536
       threads: 8
       temp: 0.7
@@ -46,10 +46,10 @@ models:
       cache_type_v: q8_0
       flash_attn: true
 
-  - name: gemma3-8b
-    repo: bartowski/gemma-3-8b-it-GGUF
+  - name: gemma3-12b
+    repo: unsloth/gemma-3-12b-it-qat-int4-GGUF
     include: "*Q4_K_M*"
-    local_dir: ~/models/gemma3-8b
+    local_dir: ~/models/gemma3-12b
     serve:
       host: 0.0.0.0
       port: 8083
@@ -59,6 +59,7 @@ models:
       temp: 0.8
       top_p: 0.95
       repeat_penalty: 1.05
+      jinja: true
 
   - name: qwen25-7b
     repo: bartowski/Qwen2.5-7B-Instruct-GGUF
@@ -82,8 +83,11 @@ models:
       host: 0.0.0.0
       port: 8085
       n_gpu_layers: 99
-      ctx_size: 128000
+      ctx_size: 64000
       threads: 8
       temp: 0.7
       top_p: 0.95
       repeat_penalty: 1.05
+      cache_type_k: q8_0
+      cache_type_v: q8_0
+      flash_attn: true

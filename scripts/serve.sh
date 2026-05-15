@@ -80,6 +80,9 @@ cache_type_v=$(get cache_type_v)
 flash_attn=$(get flash_attn)
 [[ "$flash_attn" == "true" ]] && args+=(--flash-attn on)
 
+jinja=$(get jinja)
+[[ "$jinja" == "true" ]] && args+=(--jinja)
+
 echo "Starting: $name ($model_file)"
 echo "Using command llama-server ${args[*]}"
 exec llama-server "${args[@]}"
