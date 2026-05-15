@@ -37,5 +37,14 @@ args=(
 top_k=$(get top_k)
 [[ "$top_k" != "null" ]] && args+=(--top-k "$top_k")
 
+cache_type_k=$(get cache_type_k)
+[[ "$cache_type_k" != "null" ]] && args+=(--cache-type-k "$cache_type_k")
+
+cache_type_v=$(get cache_type_v)
+[[ "$cache_type_v" != "null" ]] && args+=(--cache-type-v "$cache_type_v")
+
+flash_attn=$(get flash_attn)
+[[ "$flash_attn" == "true" ]] && args+=(--flash-attn)
+
 echo "Starting: $name ($model_file)"
 exec llama-server "${args[@]}"
