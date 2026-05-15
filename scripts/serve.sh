@@ -82,5 +82,4 @@ flash_attn=$(get flash_attn)
 
 echo "Starting: $name ($model_file)"
 echo "Using command llama-server ${args[*]}"
-exit 0
 exec llama-server "${args[@]}"
