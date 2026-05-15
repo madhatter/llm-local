@@ -8,7 +8,7 @@ models:
       host: 0.0.0.0
       port: 8080
       n_gpu_layers: 99
-      ctx_size: 32768
+      ctx_size: 65536
       threads: 8
       temp: 0.8
       top_p: 0.95
@@ -37,7 +37,7 @@ models:
       host: 0.0.0.0
       port: 8082
       n_gpu_layers: 20
-      ctx_size: 32768
+      ctx_size: 65536
       threads: 8
       temp: 0.7
       top_p: 0.95
@@ -45,3 +45,45 @@ models:
       cache_type_k: q8_0
       cache_type_v: q8_0
       flash_attn: true
+
+  - name: gemma3-8b
+    repo: google/gemma-3-8b-it
+    include: "*Q4_K_M*"
+    local_dir: ~/models/gemma3-8b
+    serve:
+      host: 0.0.0.0
+      port: 8083
+      n_gpu_layers: 99
+      ctx_size: 27000
+      threads: 8
+      temp: 0.8
+      top_p: 0.95
+      repeat_penalty: 1.05
+
+  - name: qwen25-7b
+    repo: Qwen/Qwen2.5-7B-Instruct-GGUF
+    include: "*Q4_K_M*"
+    local_dir: ~/models/qwen25-7b
+    serve:
+      host: 0.0.0.0
+      port: 8084
+      n_gpu_layers: 99
+      ctx_size: 131072
+      threads: 8
+      temp: 0.7
+      top_p: 0.95
+      repeat_penalty: 1.05
+
+  - name: phi35-mini
+    repo: microsoft/Phi-3.5-mini-instruct-GGUF
+    include: "*Q4_K_M*"
+    local_dir: ~/models/phi35-mini
+    serve:
+      host: 0.0.0.0
+      port: 8085
+      n_gpu_layers: 99
+      ctx_size: 128000
+      threads: 8
+      temp: 0.7
+      top_p: 0.95
+      repeat_penalty: 1.05
