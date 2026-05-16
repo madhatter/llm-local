@@ -83,6 +83,19 @@ flash_attn=$(get flash_attn)
 jinja=$(get jinja)
 [[ "$jinja" == "true" ]] && args+=(--jinja)
 
+batch_size=$(get batch_size)
+[[ "$batch_size" != "null" ]] && args+=(--batch-size "$batch_size")
+
+ubatch_size=$(get ubatch_size)
+[[ "$ubatch_size" != "null" ]] && args+=(--ubatch-size "$ubatch_size")
+
+cont_batching=$(get cont_batching)
+[[ "$cont_batching" == "true" ]] && args+=(--cont-batching)
+
+mmap=$(get mmap)
+[[ "$mmap" != "null" ]] && [[ "$mmap" == "false" ]] && args+=(--no-mmap)
+[[ "$mmap" != "null" ]] && [[ "$mmap" == "true" ]] && args+=(--mmap)
+
 echo "Starting: $name ($model_file)"
 echo "Using command llama-server ${args[*]}"
 exec llama-server "${args[@]}"

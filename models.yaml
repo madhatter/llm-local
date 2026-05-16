@@ -108,6 +108,10 @@ models:
       repeat_penalty: 1.05
       cache_type_k: q4_0
       cache_type_v: q8_0
+      batch_size: 512
+      ubatch_size: 128
+      cont_batching: true
       flash_attn: true
       jinja: true
+      mmap: false
 
