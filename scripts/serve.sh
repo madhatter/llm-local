@@ -96,6 +96,12 @@ mmap=$(get mmap)
 [[ "$mmap" != "null" ]] && [[ "$mmap" == "false" ]] && args+=(--no-mmap)
 [[ "$mmap" != "null" ]] && [[ "$mmap" == "true" ]] && args+=(--mmap)
 
+# if ngl is 0, we want to disable GPU usage
+gpu_layers=$(get n_gpu_layers)
+if [[ "$gpu_layers" == "0" ]]; then
+    export CUDA_VISIBLE_DEVICES=""
+fi
+
 echo "Starting: $name ($model_file)"
 echo "Using command llama-server ${args[*]}"
 exec llama-server "${args[@]}"
