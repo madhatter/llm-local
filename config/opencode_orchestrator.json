@@ -1,0 +1,43 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "llama-coder": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Local llama.cpp (Orchestrator - Coder)",
+      "options": {
+        "baseURL": "http://192.168.0.100:8082/qwen3-coder-30b/v1",
+        "apiKey": "not-needed"
+      },
+      "models": {
+        "qwen3-coder-30b-q4": {
+          "name": "Qwen3 Coder 30B Q4",
+          "tools": true,
+          "context_length": 65536,
+          "max_tokens": 8192
+        }
+      }
+    },
+    "llama-reasoning": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Local llama.cpp (Orchestrator - Reasoning)",
+      "options": {
+        "baseURL": "http://192.168.0.100:8082/qwen36-27b/v1",
+        "apiKey": "not-needed"
+      },
+      "models": {
+        "qwen36-27b-q3": {
+          "name": "Qwen 3.6 27B Q3",
+          "tools": true,
+          "context_length": 32768,
+          "max_tokens": 8192
+        }
+      }
+    }
+  },
+  "model": "llama-reasoning/qwen36-27b-q3",
+  "small_model": "llama-coder/qwen3-coder-30b-q4",
+  "compaction": { "auto": true, "prune": true, "tail_turns": 4, "reserved": 10000 },
+  "tool_output": { "max_lines": 150, "max_bytes": 6144 },
+  "formatter": true,
+  "lsp": true
+}
