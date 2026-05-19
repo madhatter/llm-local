@@ -11,6 +11,7 @@ import (
 	"os/exec"
 	"os/signal"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"sync"
 	"syscall"
@@ -67,7 +68,7 @@ func loadConfig() {
 	projectDir := filepath.Dir(scriptDir)
 
 	baseFile := filepath.Join(projectDir, "../models.yaml")
-	osFile := filepath.Join(projectDir, "config", fmt.Sprintf("%s.yaml", runtimeOS()))
+	osFile := filepath.Join(projectDir, "config", fmt.Sprintf("%s.yaml", runtime.GOOS))
 
 	models = make(map[string]modelConfig)
 
@@ -98,15 +99,6 @@ func loadConfig() {
 				}
 			}
 		}
-	}
-}
-
-func runtimeOS() string {
-	switch os.Getenv("GOOS") {
-	case "linux", "darwin":
-		return os.Getenv("GOOS")
-	default:
-		return os.Getenv("OS")
 	}
 }
 
