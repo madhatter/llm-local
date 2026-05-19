@@ -35,7 +35,6 @@
     }
   },
   "model": "llama-reasoning/qwen36-27b-q3",
-  "small_model": "llama-coder/qwen3-coder-30b-q4",
   "compaction": { "auto": true, "prune": true, "tail_turns": 4, "reserved": 10000 },
   "tool_output": { "max_lines": 150, "max_bytes": 6144 },
   "formatter": true,
