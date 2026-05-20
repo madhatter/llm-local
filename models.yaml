@@ -22,12 +22,19 @@ models:
       host: 0.0.0.0
       port: 8081
       n_gpu_layers: 99
-      ctx_size: 65536
+      ctx_size: 32768
       threads: 8
       temp: 0.7
       top_p: 0.8
       top_k: 20
       repeat_penalty: 1.05
+      cache_type_k: q4_0
+      cache_type_v: q8_0
+      batch_size: 512
+      ubatch_size: 128
+      cont_batching: true
+      flash_attn: true
+      jinja: true
 
   - name: gemma4-26b
     repo: unsloth/gemma-4-26B-A4B-it-GGUF

@@ -284,8 +284,8 @@ func startServer(modelName string) error {
 	log.Printf("Starting server for '%s'...", modelName)
 
 	serverProcess = exec.Command("llama-server", args...)
-	serverProcess.Stdout = nil
-	serverProcess.Stderr = nil
+	serverProcess.Stdout = os.Stdout
+	serverProcess.Stderr = os.Stderr
 	if err := serverProcess.Start(); err != nil {
 		return fmt.Errorf("failed to start llama-server: %w", err)
 	}

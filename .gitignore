@@ -1,2 +1,7 @@
 # OS
 .DS_Store
+
+# Buildfiles
+scripts/go.mod
+scripts/go.sum
+scripts/llm_orchestrator
