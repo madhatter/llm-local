@@ -112,13 +112,13 @@ models:
       system_prompt_file: ~/code/llm-local/config/system_prompt.txt
 
   - name: qwen36-27b
-    repo: bartowski/Qwen_Qwen3.6-27B-GGUF
-    include: "*Q4_K_M*"
+    repo: unsloth/Qwen3.6-27B-GGUF
+    include: "*Q3_K_M*"
     local_dir: ~/models/qwen36
     serve:
       host: 0.0.0.0
       port: 8086
-      n_gpu_layers: 99
+      n_gpu_layers: 999
       ctx_size: 32768
       threads: 8
       temp: 0.7
