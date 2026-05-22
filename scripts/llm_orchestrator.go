@@ -39,7 +39,6 @@ type serveConfig struct {
 	ContBatching     bool   `yaml:"cont_batching"`
 	Mmap             *bool  `yaml:"mmap"`
 	NCPUMoe          *int   `yaml:"n_cpu_moe"`
-	SystemPromptFile string `yaml:"system_prompt_file"`
 }
 
 type modelConfig struct {
@@ -156,9 +155,6 @@ func mergeServe(base, overlay serveConfig) serveConfig {
 	if overlay.NCPUMoe != nil {
 		base.NCPUMoe = overlay.NCPUMoe
 	}
-	if overlay.SystemPromptFile != "" {
-		base.SystemPromptFile = overlay.SystemPromptFile
-	}
 	return base
 }
 
@@ -231,14 +227,6 @@ func buildArgs(cfg modelConfig) []string {
 	}
 	if s.NCPUMoe != nil {
 		args = append(args, "--n-cpu-moe", fmt.Sprintf("%d", *s.NCPUMoe))
-	}
-	if s.SystemPromptFile != "" {
-		content, err := os.ReadFile(expandHome(s.SystemPromptFile))
-		if err == nil {
-			args = append(args, "--system-prompt", string(content))
-		} else {
-			log.Printf("Warning: cannot read system_prompt_file %s: %v", s.SystemPromptFile, err)
-		}
 	}
 
 	return args

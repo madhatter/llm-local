@@ -99,12 +99,6 @@ mmap=$(get mmap)
 n_cpu_moe=$(get n_cpu_moe)
 [[ "$n_cpu_moe" != "null" ]] && args+=(--n-cpu-moe "$n_cpu_moe")
 
-system_prompt_file=$(get system_prompt_file)
-if [[ "$system_prompt_file" != "null" && -n "$system_prompt_file" ]]; then
-    system_prompt_file="${system_prompt_file/#\~/$HOME}"
-    args+=(--system-prompt "$(cat "$system_prompt_file")")
-fi
-
 # if ngl is 0, we want to disable GPU usage
 gpu_layers=$(get n_gpu_layers)
 if [[ "$gpu_layers" == "0" ]]; then
