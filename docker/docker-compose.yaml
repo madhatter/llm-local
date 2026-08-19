@@ -1,0 +1,22 @@
+services:
+    open-webui:
+      image: ghcr.io/open-webui/open-webui:main
+      ports:
+        - "3000:8080"
+      volumes:
+        - open-webui-data:/app/backend/data
+      environment:
+        - OPENAI_API_BASE_URL=http://host.docker.internal:8082/v1
+      extra_hosts:
+        - "host.docker.internal:host-gateway"
+      depends_on:
+        - mcpo
+
+    mcpo:
+      image: ghcr.io/open-webui/mcpo:main
+      ports:
+        - "8000:8000"
+      command: ["--port", "8000", "--", "npx", "-y", "@upstash/context7-mcp"]
+
+volumes:
+  open-webui-data:
