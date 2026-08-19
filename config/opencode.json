@@ -97,7 +97,7 @@
         }
       }
     },
-    "llama-qwen36-27b": {
+    "llama-qwen38-27b": {
       "npm": "@ai-sdk/openai-compatible",
       "name": "Local llama.cpp",
       "options": {
@@ -105,8 +105,8 @@
         "apiKey": "not-needed"
       },
       "models": {
-        "qwen36-27b-q3": {
-          "name": "Qwen 3.6 27B Q3_K_M",
+        "qwen38-27b-ud-q3": {
+          "name": "Qwen 3.8 27B UD-Q3_K_XL",
           "tools": true,
           "context_length": 32768,
           "max_tokens": 8192
@@ -114,7 +114,7 @@
       }
     }
   },
-  "model": "llama-qwen36-27b/qwen36-27b-q3",
+  "model": "llama-qwen38-27b/qwen38-27b-ud-q3",
   "small_model": "llama-phi35-mini/phi35-mini-q4",
   "compaction": { "auto": true, "prune": true, "tail_turns": 4, "reserved": 10000 },
   "tool_output": { "max_lines": 150, "max_bytes": 6144 },

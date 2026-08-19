@@ -105,10 +105,10 @@ models:
       cache_type_k: f16
       cache_type_v: f16
 
-  - name: qwen36-27b
-    repo: unsloth/Qwen3.6-27B-GGUF
-    include: "*Q3_K_M*"
-    local_dir: ~/models/qwen36
+  - name: qwen38-27b
+    repo: unsloth/Qwen3.8-27B-GGUF
+    include: "*UD-Q3_K_XL*"
+    local_dir: ~/models/qwen38
     serve:
       host: 0.0.0.0
       port: 8086
