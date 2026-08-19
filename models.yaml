@@ -115,8 +115,8 @@ models:
       n_gpu_layers: 999
       ctx_size: 65536
       threads: 12
-      temp: 0.7
-      top_p: 0.95
+      temp: 0.3
+      top_p: 0.9
       top_k: 20
       repeat_penalty: 1.05
       cache_type_k: q8_0
