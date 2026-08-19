@@ -119,5 +119,15 @@
   "compaction": { "auto": true, "prune": true, "tail_turns": 4, "reserved": 10000 },
   "tool_output": { "max_lines": 150, "max_bytes": 6144 },
   "formatter": true,
-  "lsp": true
+  "lsp": true,
+  "mcp": {
+    "searxng": {
+      "type": "local",
+      "command": ["npx", "-y", "mcp-searxng"],
+      "enabled": true,
+      "environment": {
+        "SEARXNG_URL": "http://192.168.0.100:8888"
+      }
+    }
+  }
 }
