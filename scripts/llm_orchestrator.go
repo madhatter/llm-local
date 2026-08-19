@@ -39,6 +39,7 @@ type serveConfig struct {
 	ContBatching     bool   `yaml:"cont_batching"`
 	Mmap             *bool  `yaml:"mmap"`
 	NCPUMoe          *int   `yaml:"n_cpu_moe"`
+	ReasoningEffort  string `yaml:"reasoning_effort"`
 }
 
 type modelConfig struct {
@@ -155,6 +156,9 @@ func mergeServe(base, overlay serveConfig) serveConfig {
 	if overlay.NCPUMoe != nil {
 		base.NCPUMoe = overlay.NCPUMoe
 	}
+	if overlay.ReasoningEffort != "" {
+		base.ReasoningEffort = overlay.ReasoningEffort
+	}
 	return base
 }
 
@@ -228,6 +232,9 @@ func buildArgs(cfg modelConfig) []string {
 	}
 	if s.NCPUMoe != nil {
 		args = append(args, "--n-cpu-moe", fmt.Sprintf("%d", *s.NCPUMoe))
+	}
+	if s.ReasoningEffort != "" {
+		args = append(args, "--chat-template-kwargs", fmt.Sprintf(`{"reasoning_effort":"%s"}`, s.ReasoningEffort))
 	}
 
 	return args

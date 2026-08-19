@@ -100,6 +100,9 @@ mmap=$(get mmap)
 n_cpu_moe=$(get n_cpu_moe)
 [[ "$n_cpu_moe" != "null" ]] && args+=(--n-cpu-moe "$n_cpu_moe")
 
+reasoning_effort=$(get reasoning_effort)
+[[ "$reasoning_effort" != "null" ]] && args+=(--chat-template-kwargs "{\"reasoning_effort\":\"$reasoning_effort\"}")
+
 # if ngl is 0, we want to disable GPU usage
 gpu_layers=$(get n_gpu_layers)
 if [[ "$gpu_layers" == "0" ]]; then

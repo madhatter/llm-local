@@ -127,3 +127,4 @@ models:
       flash_attn: true
       jinja: true
       mmap: false
+      reasoning_effort: low
