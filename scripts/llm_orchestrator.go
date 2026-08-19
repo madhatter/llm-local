@@ -192,6 +192,7 @@ func buildArgs(cfg modelConfig) []string {
 		"--temp", fmt.Sprintf("%.2f", s.Temp),
 		"--top-p", fmt.Sprintf("%.2f", s.TopP),
 		"--repeat-penalty", fmt.Sprintf("%.2f", s.RepeatPenalty),
+		"--parallel", "1",
 	}
 
 	if s.TopK != nil {

@@ -66,6 +66,7 @@ args=(
     --temp "$(get temp)"
     --top-p "$(get top_p)"
     --repeat-penalty "$(get repeat_penalty)"
+    --parallel 1
 )
 
 top_k=$(get top_k)
