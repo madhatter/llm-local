@@ -75,19 +75,22 @@ models:
       repeat_penalty: 1.05
       jinja: true
 
-  - name: qwen25-32b
-    repo: bartowski/Qwen2.5-32B-Instruct-GGUF
-    include: "*Q3_K_L*"
-    local_dir: ~/models/qwen25-32b
+  - name: qwen25-14b
+    repo: bartowski/Qwen2.5-14B-Instruct-GGUF
+    include: "*Q5_K_M*"
+    local_dir: ~/models/qwen25-14b
     serve:
       host: 0.0.0.0
       port: 8084
       n_gpu_layers: 99
-      ctx_size: 65536
+      ctx_size: 32768
       flash_attn: true
       threads: 8
       temp: 0.7
       top_p: 0.95
+      repeat_penalty: 1.05
+      cache_type_k: q4_0
+      cache_type_v: q4_0
 
   - name: phi35-mini
     repo: bartowski/Phi-3.5-mini-instruct-GGUF
