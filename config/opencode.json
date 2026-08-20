@@ -108,7 +108,7 @@
         "qwen38-27b-ud-q3": {
           "name": "Qwen 3.8 27B UD-Q3_K_XL",
           "tools": true,
-          "context_length": 65536,
+          "context_length": 58000,
           "max_tokens": 8192
         }
       }
