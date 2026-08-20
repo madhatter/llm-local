@@ -65,7 +65,7 @@
         }
       }
     },
-    "llama-qwen25-7b": {
+    "llama-qwen25-32b": {
       "npm": "@ai-sdk/openai-compatible",
       "name": "Local llama.cpp",
       "options": {
@@ -74,9 +74,9 @@
       },
       "models": {
         "qwen25-7b-q4": {
-          "name": "Qwen 2.5 7B Q4_K_M",
+          "name": "Qwen 2.5 32B Q3_K_L",
           "tools": true,
-          "context_length": 131072,
+          "context_length": 58000,
           "max_tokens": 16384
         }
       }
