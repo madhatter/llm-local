@@ -1,9 +1,25 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "provider": {
-    "llama-coder": {
+    "llama-qwen35-9b": {
       "npm": "@ai-sdk/openai-compatible",
-      "name": "Local llama.cpp (Orchestrator - Coder)",
+      "name": "Local llama.cpp (Orchestrator)",
+      "options": {
+        "baseURL": "http://192.168.0.100:8082/qwen35-9b/v1",
+        "apiKey": "not-needed"
+      },
+      "models": {
+        "qwen35-9b-q4": {
+          "name": "Qwen 3.5 9B Q4_K_M",
+          "tools": true,
+          "context_length": 32768,
+          "max_tokens": 8192
+        }
+      }
+    },
+    "llama-qwen3-coder-30b": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Local llama.cpp (Orchestrator)",
       "options": {
         "baseURL": "http://192.168.0.100:8082/qwen3-coder-30b/v1",
         "apiKey": "not-needed"
@@ -17,16 +33,80 @@
         }
       }
     },
-    "llama-reasoning": {
+    "llama-gemma4-26b": {
       "npm": "@ai-sdk/openai-compatible",
-      "name": "Local llama.cpp (Orchestrator - Reasoning)",
+      "name": "Local llama.cpp (Orchestrator)",
+      "options": {
+        "baseURL": "http://192.168.0.100:8082/gemma4-26b/v1",
+        "apiKey": "not-needed"
+      },
+      "models": {
+        "gemma4-26b-q4": {
+          "name": "Gemma 4 26B Q4",
+          "tools": true,
+          "context_length": 32768,
+          "max_tokens": 8192
+        }
+      }
+    },
+    "llama-gemma3-12b": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Local llama.cpp (Orchestrator)",
+      "options": {
+        "baseURL": "http://192.168.0.100:8082/gemma3-12b/v1",
+        "apiKey": "not-needed"
+      },
+      "models": {
+        "gemma3-12b-q4": {
+          "name": "Gemma 3 12B Q4_K_M",
+          "tools": true,
+          "context_length": 27000,
+          "max_tokens": 16384
+        }
+      }
+    },
+    "llama-qwen25-14b": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Local llama.cpp (Orchestrator)",
+      "options": {
+        "baseURL": "http://192.168.0.100:8082/qwen25-14b/v1",
+        "apiKey": "not-needed"
+      },
+      "models": {
+        "qwen25-14b-q5": {
+          "name": "Qwen 2.5 14B Q5_K_M",
+          "tools": true,
+          "context_length": 58000,
+          "max_tokens": 16384
+        }
+      }
+    },
+    "llama-phi35-mini": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Local llama.cpp (Orchestrator)",
+      "options": {
+        "baseURL": "http://192.168.0.100:8082/phi35-mini/v1",
+        "apiKey": "not-needed"
+      },
+      "models": {
+        "phi35-mini-q4": {
+          "name": "Phi-3.5 Mini Q4_K_M",
+          "tools": true,
+          "context_length": 128000,
+          "max_tokens": 16384
+        }
+      }
+    },
+    "llama-qwen38-27b": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Local llama.cpp (Orchestrator)",
       "options": {
         "baseURL": "http://192.168.0.100:8082/qwen38-27b/v1",
         "apiKey": "not-needed"
       },
       "models": {
         "qwen38-27b-ud-q3": {
-          "name": "Qwen 3.8 27B UD-Q3",
+          "name": "Qwen 3.8 27B UD-Q3_K_XL",
           "tools": true,
           "context_length": 58000,
           "max_tokens": 8192
@@ -34,7 +114,8 @@
       }
     }
   },
-  "model": "llama-reasoning/qwen38-27b-ud-q3",
+  "model": "llama-qwen38-27b/qwen38-27b-ud-q3",
+  "small_model": "llama-phi35-mini/phi35-mini-q4",
   "compaction": { "auto": true, "prune": true, "tail_turns": 4, "reserved": 10000 },
   "tool_output": { "max_lines": 150, "max_bytes": 6144 },
   "formatter": true,
