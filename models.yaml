@@ -46,7 +46,7 @@ models:
       host: 0.0.0.0
       port: 8082
       n_gpu_layers: 999
-      ctx_size: 32768
+      ctx_size: 65536
       threads: 12
       temp: 0.7
       top_p: 0.95
@@ -56,7 +56,7 @@ models:
       batch_size: 512
       ubatch_size: 512
       flash_attn: true
-      n_cpu_moe: 5
+      n_cpu_moe: 6
       jinja: true
       mmap: false
 
@@ -99,14 +99,16 @@ models:
     serve:
       host: 0.0.0.0
       port: 8085
-      n_gpu_layers: 0
-      ctx_size: 8192
+      n_gpu_layers: 999
+      ctx_size: 24576
       threads: 8
       temp: 0.7
       top_p: 0.95
       repeat_penalty: 1.05
       cache_type_k: f16
       cache_type_v: f16
+      flash_attn: true
+      jinja: true
 
   - name: qwen38-27b
     repo: unsloth/Qwen3.8-27B-GGUF

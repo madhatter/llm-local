@@ -28,7 +28,7 @@
         "qwen3-coder-30b-q4": {
           "name": "Qwen3 Coder 30B Q4",
           "tools": true,
-          "context_length": 65536,
+          "context_length": 29000,
           "max_tokens": 8192
         }
       }
@@ -44,7 +44,7 @@
         "gemma4-26b-q4": {
           "name": "Gemma 4 26B Q4",
           "tools": true,
-          "context_length": 32768,
+          "context_length": 58000,
           "max_tokens": 8192
         }
       }
@@ -60,7 +60,7 @@
         "gemma3-12b-q4": {
           "name": "Gemma 3 12B Q4_K_M",
           "tools": true,
-          "context_length": 27000,
+          "context_length": 24000,
           "max_tokens": 16384
         }
       }
@@ -76,7 +76,7 @@
         "qwen25-14b-q5": {
           "name": "Qwen 2.5 14B Q5_K_M",
           "tools": true,
-          "context_length": 58000,
+          "context_length": 29000,
           "max_tokens": 16384
         }
       }
@@ -91,9 +91,9 @@
       "models": {
         "phi35-mini-q4": {
           "name": "Phi-3.5 Mini Q4_K_M",
-          "tools": true,
-          "context_length": 128000,
-          "max_tokens": 16384
+          "tools": false,
+          "context_length": 21000,
+          "max_tokens": 8192
         }
       }
     },
@@ -115,7 +115,6 @@
     }
   },
   "model": "llama-qwen38-27b/qwen38-27b-ud-q3",
-  "small_model": "llama-phi35-mini/phi35-mini-q4",
   "compaction": { "auto": true, "prune": true, "tail_turns": 4, "reserved": 10000 },
   "tool_output": { "max_lines": 150, "max_bytes": 6144 },
   "formatter": true,
