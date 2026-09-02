@@ -33,6 +33,22 @@
         }
       }
     },
+    "llama-qwen3-coder-30b-q3": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Local llama.cpp",
+      "options": {
+        "baseURL": "http://192.168.0.100:8087/v1",
+        "apiKey": "not-needed"
+      },
+      "models": {
+        "qwen3-coder-30b-q3": {
+          "name": "Qwen3 Coder 30B Q3",
+          "tools": true,
+          "context_length": 58000,
+          "max_tokens": 8192
+        }
+      }
+    },
     "llama-gemma4-26b": {
       "npm": "@ai-sdk/openai-compatible",
       "name": "Local llama.cpp",
