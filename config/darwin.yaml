@@ -1,7 +1,36 @@
+# Darwin (Apple Silicon) overlay for M4 Pro (48GB unified memory, 273 GB/s)
+# All layers on Metal GPU; no CPU MoE offloading needed with unified memory.
 models:
+  - name: qwen35-9b
+    serve:
+      n_gpu_layers: 999
+
   - name: qwen3-coder-30b
     serve:
-      n_gpu_layers: 99
+      n_gpu_layers: 999
+      n_cpu_moe: 0
+      mmap: false
+      ctx_size: 65536
+      cache_type_v: q4_0
+
   - name: gemma4-26b
     serve:
-      n_gpu_layers: 99
+      n_gpu_layers: 999
+      n_cpu_moe: 0
+      threads: 8
+      cache_type_k: q4_0
+      cache_type_v: q4_0
+
+  - name: gemma3-12b
+    serve:
+      n_gpu_layers: 999
+
+  - name: qwen25-14b
+    serve:
+      n_gpu_layers: 999
+
+  - name: qwen38-27b
+    serve:
+      threads: 8
+      cache_type_k: q4_0
+      cache_type_v: q4_0
