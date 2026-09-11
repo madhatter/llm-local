@@ -66,10 +66,16 @@ var (
 )
 
 func loadConfig() {
-	scriptDir := filepath.Dir(os.Args[0])
+	// Resolve the binary's absolute location so config paths work no matter
+	// how the process was invoked (relative path, systemd, other CWD).
+	exe, err := os.Executable()
+	if err != nil {
+		log.Fatalf("Cannot resolve executable path: %v", err)
+	}
+	scriptDir := filepath.Dir(exe)
 	projectDir := filepath.Dir(scriptDir)
 
-	baseFile := filepath.Join(projectDir, "../models.yaml")
+	baseFile := filepath.Join(projectDir, "models.yaml")
 	osFile := filepath.Join(projectDir, "config", fmt.Sprintf("%s.yaml", runtime.GOOS))
 
 	models = make(map[string]modelConfig)
