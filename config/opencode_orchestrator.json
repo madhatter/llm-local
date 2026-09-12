@@ -81,22 +81,6 @@
         }
       }
     },
-    "llama-qwen25-14b": {
-      "npm": "@ai-sdk/openai-compatible",
-      "name": "Local llama.cpp (Orchestrator)",
-      "options": {
-        "baseURL": "http://192.168.0.100:8082/qwen25-14b/v1",
-        "apiKey": "not-needed"
-      },
-      "models": {
-        "qwen25-14b-q5": {
-          "name": "Qwen 2.5 14B Q5_K_M",
-          "tools": true,
-          "context_length": 29000,
-          "max_tokens": 16384
-        }
-      }
-    },
     "llama-phi35-mini": {
       "npm": "@ai-sdk/openai-compatible",
       "name": "Local llama.cpp (Orchestrator)",
