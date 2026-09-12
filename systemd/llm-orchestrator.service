@@ -1,0 +1,16 @@
+[Unit]
+Description=LLM Orchestrator (llama.cpp model router on :8082)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+# Shell wrapper so $HOME expands at runtime (ExecStart paths must be absolute,
+# but arguments are expanded by the shell) — keeps this unit portable across
+# machines/users.
+ExecStart=/bin/sh -c 'exec "$HOME/code/llm-local/scripts/llm_orchestrator"'
+Restart=on-failure
+RestartSec=5
+# llama-server children inherit stdout/stderr -> journalctl --user -u llm-orchestrator
+
+[Install]
+WantedBy=default.target

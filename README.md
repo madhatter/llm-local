@@ -49,6 +49,31 @@ go build -o llm_orchestrator .
 Have a look at the `config/opencode_orchestrator.json` file for an example
 configuration. The `model_name` field should match the model name in `models.yaml`.
 
+## Systemd Services
+
+The `systemd/` directory holds user-level systemd units for this setup.
+Install with:
+
+    cp systemd/*.service ~/.config/systemd/user/
+    systemctl --user daemon-reload
+    systemctl --user enable --now llm-orchestrator
+
+Enable lingering so user services start at boot without a login session:
+
+    sudo loginctl enable-linger $USER
+
+### llm-orchestrator.service
+
+Runs the Go orchestrator (`scripts/llm_orchestrator`) as a user service.
+It lazily starts `llama-server` for whichever model is requested via
+`:8082/<model>/v1`, so no model is loaded until needed and VRAM stays
+free otherwise. Switch models at runtime with:
+
+    curl -X POST localhost:8082/switch/<model-name>
+    curl localhost:8082/status
+
+Logs: `journalctl --user -u llm-orchestrator`
+
 ## Docker Services
 
 The `docker/` directory contains supporting services that run alongside the

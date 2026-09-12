@@ -9,6 +9,8 @@ services:
         - OPENAI_API_BASE_URL=http://host.docker.internal:8082/v1
       extra_hosts:
         - "host.docker.internal:host-gateway"
+      dns:
+        - 192.168.0.1
       depends_on:
         - mcpo
 
@@ -17,6 +19,8 @@ services:
       ports:
         - "8000:8000"
       command: ["--port", "8000", "--", "npx", "-y", "@upstash/context7-mcp"]
+      dns:
+        - 192.168.0.1
 
     searxng:
       image: searxng/searxng:latest
@@ -26,6 +30,8 @@ services:
         - ./searxng:/etc/searxng
       environment:
         - SEARXNG_BASE_URL=http://localhost:8888/
+      dns:
+        - 192.168.0.1
       restart: unless-stopped
 
 volumes:
