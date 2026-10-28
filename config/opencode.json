@@ -17,22 +17,6 @@
         }
       }
     },
-    "llama-qwen3-coder-30b": {
-      "npm": "@ai-sdk/openai-compatible",
-      "name": "Local llama.cpp",
-      "options": {
-        "baseURL": "http://192.168.0.100:8081/v1",
-        "apiKey": "not-needed"
-      },
-      "models": {
-        "qwen3-coder-30b-q4": {
-          "name": "Qwen3 Coder 30B Q4",
-          "tools": true,
-          "context_length": 29000,
-          "max_tokens": 8192
-        }
-      }
-    },
     "llama-qwen3-coder-30b-q3": {
       "npm": "@ai-sdk/openai-compatible",
       "name": "Local llama.cpp",
@@ -61,38 +45,6 @@
           "name": "Gemma 4 26B Q4",
           "tools": true,
           "context_length": 58000,
-          "max_tokens": 8192
-        }
-      }
-    },
-    "llama-gemma3-12b": {
-      "npm": "@ai-sdk/openai-compatible",
-      "name": "Local llama.cpp",
-      "options": {
-        "baseURL": "http://192.168.0.100:8083/v1",
-        "apiKey": "not-needed"
-      },
-      "models": {
-        "gemma3-12b-q4": {
-          "name": "Gemma 3 12B Q4_K_M",
-          "tools": true,
-          "context_length": 24000,
-          "max_tokens": 16384
-        }
-      }
-    },
-    "llama-phi35-mini": {
-      "npm": "@ai-sdk/openai-compatible",
-      "name": "Local llama.cpp",
-      "options": {
-        "baseURL": "http://192.168.0.100:8085/v1",
-        "apiKey": "not-needed"
-      },
-      "models": {
-        "phi35-mini-q4": {
-          "name": "Phi-3.5 Mini Q4_K_M",
-          "tools": false,
-          "context_length": 21000,
           "max_tokens": 8192
         }
       }

@@ -21,14 +21,6 @@ models:
       cache_type_k: q4_0
       cache_type_v: q4_0
 
-  - name: gemma3-12b
-    serve:
-      n_gpu_layers: 999
-
-  - name: qwen25-14b
-    serve:
-      n_gpu_layers: 999
-
   - name: qwen38-27b
     serve:
       threads: 8
