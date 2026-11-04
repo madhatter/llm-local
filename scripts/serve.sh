@@ -93,9 +93,17 @@ ubatch_size=$(get ubatch_size)
 cont_batching=$(get cont_batching)
 [[ "$cont_batching" == "true" ]] && args+=(--cont-batching)
 
+# Newer llama.cpp builds replaced --mmap/--no-mmap with --load-mode
 mmap=$(get mmap)
-[[ "$mmap" != "null" ]] && [[ "$mmap" == "false" ]] && args+=(--no-mmap)
-[[ "$mmap" != "null" ]] && [[ "$mmap" == "true" ]] && args+=(--mmap)
+if [[ "$mmap" != "null" ]]; then
+    if llama-server --help 2>&1 | grep -q -- '--load-mode'; then
+        [[ "$mmap" == "false" ]] && args+=(--load-mode none)
+        [[ "$mmap" == "true" ]] && args+=(--load-mode mmap)
+    else
+        [[ "$mmap" == "false" ]] && args+=(--no-mmap)
+        [[ "$mmap" == "true" ]] && args+=(--mmap)
+    fi
+fi
 
 n_cpu_moe=$(get n_cpu_moe)
 [[ "$n_cpu_moe" != "null" ]] && args+=(--n-cpu-moe "$n_cpu_moe")

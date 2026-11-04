@@ -185,6 +185,12 @@ func findModelFile(localDir string) (string, error) {
 	return files[0], nil
 }
 
+// Newer llama.cpp builds replaced --mmap/--no-mmap with --load-mode.
+var hasLoadMode = sync.OnceValue(func() bool {
+	out, _ := exec.Command("llama-server", "--help").CombinedOutput()
+	return strings.Contains(string(out), "--load-mode")
+})
+
 func buildArgs(cfg modelConfig) []string {
 	modelFile, err := findModelFile(cfg.LocalDir)
 	if err != nil {
@@ -230,9 +236,14 @@ func buildArgs(cfg modelConfig) []string {
 		args = append(args, "--cont-batching")
 	}
 	if s.Mmap != nil {
-		if !*s.Mmap {
+		switch {
+		case hasLoadMode() && !*s.Mmap:
+			args = append(args, "--load-mode", "none")
+		case hasLoadMode():
+			args = append(args, "--load-mode", "mmap")
+		case !*s.Mmap:
 			args = append(args, "--no-mmap")
-		} else {
+		default:
 			args = append(args, "--mmap")
 		}
 	}
