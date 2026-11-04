@@ -26,3 +26,8 @@ models:
       threads: 8
       cache_type_k: q4_0
       cache_type_v: q4_0
+
+  - name: qwen36-35b
+    serve:
+      n_cpu_moe: 0
+      ctx_size: 131072
