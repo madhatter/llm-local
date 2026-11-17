@@ -14,6 +14,7 @@ import (
 	"runtime"
 	"strings"
 	"sync"
+	"sync/atomic"
 	"syscall"
 	"time"
 
@@ -60,7 +61,11 @@ const sharedPort = 18888
 var (
 	currentModel  string
 	serverProcess *exec.Cmd
+	// Closed when the current llama-server process has exited.
+	serverExited chan struct{}
 	serverMu      sync.Mutex
+	// Read by /status without taking serverMu, which is held during model loads.
+	status atomic.Pointer[statusResponse]
 	models        map[string]modelConfig
 	defaultModel  string
 )
@@ -269,38 +274,57 @@ func stopServer() {
 	if serverProcess != nil && serverProcess.Process != nil {
 		log.Printf("Stopping server for '%s'...", currentModel)
 		serverProcess.Process.Signal(syscall.SIGTERM)
-		done := make(chan error, 1)
-		go func() { done <- serverProcess.Wait() }()
 		select {
-		case <-done:
+		case <-serverExited:
 		case <-time.After(10 * time.Second):
 			serverProcess.Process.Kill()
-			<-done
+			<-serverExited
 		}
 		log.Println("Server stopped, VRAM freed.")
 	}
 	serverProcess = nil
+	serverExited = nil
 	currentModel = ""
+	setStatus("", "stopped")
 }
 
-func waitReady() error {
-	ctx, cancel := context.WithTimeout(context.Background(), 120*time.Second)
+func setStatus(model, state string) {
+	status.Store(&statusResponse{
+		CurrentModel:  model,
+		ServerRunning: state == "ready",
+		State:         state,
+	})
+}
+
+func serverHasExited() bool {
+	select {
+	case <-serverExited:
+		return true
+	default:
+		return false
+	}
+}
+
+// waitReady polls /health until the server is up, fails fast if the process dies.
+func waitReady(exited <-chan struct{}) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 300*time.Second)
 	defer cancel()
 
 	for {
-		select {
-		case <-ctx.Done():
-			return fmt.Errorf("server did not become ready in time")
-		default:
-			resp, err := http.Get(fmt.Sprintf("http://127.0.0.1:%d/health", sharedPort))
-			if err == nil && resp.StatusCode == 200 {
-				resp.Body.Close()
+		resp, err := http.Get(fmt.Sprintf("http://127.0.0.1:%d/health", sharedPort))
+		if err == nil {
+			resp.Body.Close()
+			if resp.StatusCode == http.StatusOK {
 				return nil
 			}
-			if resp != nil {
-				resp.Body.Close()
-			}
-			time.Sleep(1 * time.Second)
+		}
+
+		select {
+		case <-exited:
+			return fmt.Errorf("llama-server exited during startup, check the orchestrator journal")
+		case <-ctx.Done():
+			return fmt.Errorf("server did not become ready in time")
+		case <-time.After(1 * time.Second):
 		}
 	}
 }
@@ -309,7 +333,7 @@ func startServer(modelName string) error {
 	serverMu.Lock()
 	defer serverMu.Unlock()
 
-	if currentModel == modelName && serverProcess != nil && serverProcess.Process != nil && serverProcess.Process.Pid > 0 {
+	if currentModel == modelName && serverProcess != nil && !serverHasExited() {
 		return nil
 	}
 
@@ -327,16 +351,29 @@ func startServer(modelName string) error {
 	serverProcess.Stdout = os.Stdout
 	serverProcess.Stderr = os.Stderr
 	if err := serverProcess.Start(); err != nil {
+		serverProcess = nil
 		return fmt.Errorf("failed to start llama-server: %w", err)
 	}
 
+	cmd := serverProcess
+	exited := make(chan struct{})
+	go func() {
+		err := cmd.Wait()
+		log.Printf("llama-server for '%s' exited: %v", modelName, err)
+		// stopServer waits on exited before resetting the status, so this cannot override it.
+		setStatus(modelName, "exited")
+		close(exited)
+	}()
+	serverExited = exited
 	currentModel = modelName
+	setStatus(modelName, "loading")
 
-	if err := waitReady(); err != nil {
+	if err := waitReady(exited); err != nil {
 		stopServer()
 		return err
 	}
 
+	setStatus(modelName, "ready")
 	log.Printf("Server for '%s' ready.", modelName)
 	return nil
 }
@@ -366,6 +403,8 @@ func stripPrefix(path, model string) string {
 type statusResponse struct {
 	CurrentModel  string `json:"current_model"`
 	ServerRunning bool   `json:"server_running"`
+	// One of: stopped, loading, ready, exited.
+	State string `json:"state"`
 }
 
 type switchResponse struct {
@@ -378,10 +417,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 	if path == "/status" && r.Method == http.MethodGet {
 		w.Header().Set("Content-Type", "application/json")
-		json.NewEncoder(w).Encode(statusResponse{
-			CurrentModel:  currentModel,
-			ServerRunning: serverProcess != nil,
-		})
+		json.NewEncoder(w).Encode(status.Load())
 		return
 	}
 
@@ -407,7 +443,8 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	upstream := fmt.Sprintf("http://127.0.0.1:%d/%s", sharedPort, realPath)
+	// realPath keeps its leading slash when no model prefix was stripped.
+	upstream := fmt.Sprintf("http://127.0.0.1:%d/%s", sharedPort, strings.TrimPrefix(realPath, "/"))
 
 	req, err := http.NewRequestWithContext(r.Context(), r.Method, upstream, r.Body)
 	if err != nil {
@@ -475,6 +512,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	loadConfig()
+	setStatus("", "stopped")
 
 	log.SetFlags(log.Ltime)
 
