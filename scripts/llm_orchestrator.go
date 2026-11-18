@@ -22,25 +22,25 @@ import (
 )
 
 type serveConfig struct {
-	Host          string  `yaml:"host"`
-	Port          int     `yaml:"port"`
-	NGPULayers    int     `yaml:"n_gpu_layers"`
-	CtxSize       int     `yaml:"ctx_size"`
-	Threads       int     `yaml:"threads"`
-	Temp          float64 `yaml:"temp"`
-	TopP          float64 `yaml:"top_p"`
-	TopK          *int    `yaml:"top_k"`
-	RepeatPenalty float64 `yaml:"repeat_penalty"`
-	CacheTypeK    string  `yaml:"cache_type_k"`
-	CacheTypeV    string  `yaml:"cache_type_v"`
-	FlashAttn     bool    `yaml:"flash_attn"`
-	Jinja         bool    `yaml:"jinja"`
-	BatchSize     *int    `yaml:"batch_size"`
-	UBatchSize    *int    `yaml:"ubatch_size"`
-	ContBatching     bool   `yaml:"cont_batching"`
-	Mmap             *bool  `yaml:"mmap"`
-	NCPUMoe          *int   `yaml:"n_cpu_moe"`
-	ReasoningEffort  string `yaml:"reasoning_effort"`
+	Host            string  `yaml:"host"`
+	Port            int     `yaml:"port"`
+	NGPULayers      int     `yaml:"n_gpu_layers"`
+	CtxSize         int     `yaml:"ctx_size"`
+	Threads         int     `yaml:"threads"`
+	Temp            float64 `yaml:"temp"`
+	TopP            float64 `yaml:"top_p"`
+	TopK            *int    `yaml:"top_k"`
+	RepeatPenalty   float64 `yaml:"repeat_penalty"`
+	CacheTypeK      string  `yaml:"cache_type_k"`
+	CacheTypeV      string  `yaml:"cache_type_v"`
+	FlashAttn       bool    `yaml:"flash_attn"`
+	Jinja           bool    `yaml:"jinja"`
+	BatchSize       *int    `yaml:"batch_size"`
+	UBatchSize      *int    `yaml:"ubatch_size"`
+	ContBatching    bool    `yaml:"cont_batching"`
+	Mmap            *bool   `yaml:"mmap"`
+	NCPUMoe         *int    `yaml:"n_cpu_moe"`
+	ReasoningEffort string  `yaml:"reasoning_effort"`
 }
 
 type modelConfig struct {
@@ -63,11 +63,11 @@ var (
 	serverProcess *exec.Cmd
 	// Closed when the current llama-server process has exited.
 	serverExited chan struct{}
-	serverMu      sync.Mutex
+	serverMu     sync.Mutex
 	// Read by /status without taking serverMu, which is held during model loads.
-	status atomic.Pointer[statusResponse]
-	models        map[string]modelConfig
-	defaultModel  string
+	status       atomic.Pointer[statusResponse]
+	models       map[string]modelConfig
+	defaultModel string
 )
 
 func loadConfig() {
@@ -516,16 +516,7 @@ func main() {
 
 	log.SetFlags(log.Ltime)
 
-	for _, sig := range []os.Signal{syscall.SIGINT, syscall.SIGTERM} {
-		go func(s os.Signal) {
-			<-make(chan os.Signal, 1)
-			log.Println("\nShutting down orchestrator...")
-			stopServer()
-			os.Exit(0)
-		}(sig)
-	}
-
-	// Actually set up signal handling properly
+	// Handle SIGINT and SIGTERM to gracefully stop the server.
 	sigCh := make(chan os.Signal, 1)
 	signal.Notify(sigCh, syscall.SIGINT, syscall.SIGTERM)
 	go func() {
