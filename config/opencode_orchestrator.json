@@ -64,9 +64,25 @@
           "max_tokens": 8192
         }
       }
+    },
+    "llama-qwen36-35b": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Local llama.cpp (Orchestrator)",
+      "options": {
+        "baseURL": "http://192.168.0.100:8082/qwen36-35b/v1",
+        "apiKey": "not-needed"
+      },
+      "models": {
+        "qwen36-35b-q4": {
+          "name": "Qwen 3.6 35B-A3B UD-Q4_K_XL",
+          "tools": true,
+          "context_length": 58000,
+          "max_tokens": 8192
+        }
+      }
     }
   },
-  "model": "llama-qwen38-27b/qwen38-27b-ud-q3",
+  "model": "llama-qwen36-35b/qwen36-35b-q4",
   "compaction": { "auto": true, "prune": true, "tail_turns": 4, "reserved": 10000 },
   "tool_output": { "max_lines": 150, "max_bytes": 6144 },
   "formatter": true,

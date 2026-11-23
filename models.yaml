@@ -70,8 +70,8 @@ models:
       cont_batching: true
       flash_attn: true
       jinja: true
-      n_cpu_moe: 2
-      mmap: true
+      n_cpu_moe: 13
+      mmap: false
 
   - name: gemma4-26b
     repo: unsloth/gemma-4-26B-A4B-it-GGUF
@@ -92,7 +92,7 @@ models:
       batch_size: 512
       ubatch_size: 512
       flash_attn: true
-      n_cpu_moe: 6
+      n_cpu_moe: 12
       jinja: true
       mmap: false
 
@@ -141,5 +141,6 @@ models:
       cont_batching: true
       flash_attn: true
       jinja: true
+      n_cpu_moe: 22
       mmap: false
       reasoning_effort: medium
